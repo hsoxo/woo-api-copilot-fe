@@ -3,7 +3,10 @@ import axios from "axios";
 import Markdown from "react-markdown";
 
 import { Button } from "@headlessui/react";
-import { Input } from "@headlessui/react";
+import rehypeRaw from 'rehype-raw'; // For parsing raw HTML in Markdown
+import rehypeSlug from 'rehype-slug'; // For generating slugs for headings
+import rehypeHighlight from 'rehype-highlight';
+import './Chat.css';
 
 const Spin = () => (
   <div role="status">
@@ -64,8 +67,8 @@ const Chat = () => {
           {isLoading ? <Spin /> : "Submit"}
         </Button>
       </div>
-      <div className="pt-4">
-        <Markdown>{answer}</Markdown>
+      <div className="markdown-body pt-4">
+        <Markdown rehypePlugins={[rehypeRaw, rehypeSlug, rehypeHighlight]} >{answer}</Markdown>
       </div>
     </div>
   );
